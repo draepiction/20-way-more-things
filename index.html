@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>20 Way More Things I Love About Clara</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Things I Love About Clara</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&family=La+Belle+Aurore&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 :root {
-  --cream:     #F0E8D5;
+  --cream:      #F4EAD4;
   --parchment: #E8DABC;
   --bark:      #6B4F2E;
   --rose:      #C07070;
   --sage:      #526348;
-  --lavender:  --7A6B9E;
+  --lavender:  #7A6B9E;
   --honey:     #B8862E;
   --fog:       #8A9890;
   --ink:       #26180C;
@@ -29,6 +29,21 @@ html, body {
   font-family: 'Lora', serif;
   color: var(--ink);
   touch-action: none;
+}
+
+/* ── VIVID GOLDEN HOUR SCREEN TINT ── */
+.golden-hour-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 130, 0, 0.38) 0%,
+    rgba(255, 80, 0, 0.22) 50%,
+    rgba(180, 40, 100, 0.08) 100%
+  );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 30;
 }
 
 /* ── TABLE SURFACE ── */
@@ -73,7 +88,6 @@ html, body {
 
 .shadow-overlay-right {
   position: fixed;
-  /* Shifted up substantially higher to hide the branch core entirely out of bounds */
   top: -42%;
   right: -25%;
   width: 125vw;
@@ -100,6 +114,10 @@ html, body {
   45% { transform: scaleX(-1) rotate(3deg); }
   75% { transform: scaleX(-1) rotate(0.5deg); }
   100% { transform: scaleX(-1) rotate(-2.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none !important; }
 }
 
 /* Ambient color wash */
@@ -203,7 +221,7 @@ html, body {
 /* ── CARD BODY ── */
 .card-inner {
   flex: 1;
-  padding: 1.1rem 1.25rem 1rem 1.1rem;
+  padding: 1.3rem 1.25rem 1rem 1.1rem;
   display: flex; flex-direction: column;
   position: relative;
   overflow: hidden;
@@ -219,27 +237,18 @@ html, body {
     rgba(100,70,30,0.07) 26px,
     rgba(100,70,30,0.07) 27px
   );
-  background-position: 0 3.8rem;
+  background-position: 0 3.5rem;
   pointer-events: none;
 }
 
-.card-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent, #C07070);
-  margin-bottom: 0.3rem;
-  opacity: 0.9;
-  position: relative; z-index: 1;
-}
-
+/* Title Font */
 .card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.05rem, 4vw, 1.3rem);
-  font-style: italic; font-weight: 400;
+  font-family: 'La Belle Aurore', cursive;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  font-weight: 400;
   color: var(--bark);
-  line-height: 1.2;
-  margin-bottom: 0.55rem;
+  line-height: 1.1;
+  margin-bottom: 0.3rem;
   position: relative; z-index: 1;
 }
 
@@ -247,14 +256,15 @@ html, body {
   width: 28px; height: 1px;
   background: var(--accent, #C07070);
   opacity: 0.45;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   position: relative; z-index: 1;
 }
 
+/* Card Contents Font */
 .card-text {
-  font-family: 'Lora', serif;
-  font-size: clamp(0.75rem, 2.6vw, 0.84rem);
-  line-height: 1.7;
+  font-family: 'La Belle Aurore', cursive;
+  font-size: clamp(0.92rem, 3.1vw, 1.1rem);
+  line-height: 1.35;
   color: var(--ink);
   flex: 1;
   overflow: hidden;
@@ -264,7 +274,10 @@ html, body {
   position: relative; z-index: 1;
 }
 
-.card-text.long { -webkit-line-clamp: 3; }
+/* Expanded line-clamp logic for cards requiring extra room */
+.card-text.long, .card.expandable .card-text {
+  -webkit-line-clamp: 6 !important;
+}
 
 .card-stamp {
   position: absolute;
@@ -283,21 +296,20 @@ html, body {
   opacity: 0.9;
 }
 
-.card.closing .card-text {
-  -webkit-line-clamp: 5;
-  font-style: italic;
-  color: var(--muted);
-  font-size: clamp(0.72rem, 2.4vw, 0.8rem);
+/* Layout modifications for specific long text situations */
+.card.expandable .card-title {
+  font-size: clamp(1.25rem, 4.5vw, 1.55rem);
 }
+
+/* Signature Font */
 .card-sign {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.78rem;
+  font-family: 'La Belle Aurore', cursive;
+  font-size: 1.35rem;
   color: var(--bark);
   text-align: right;
-  margin-top: 0.35rem;
+  margin-top: 0.1rem;
   position: relative; z-index: 1;
-  opacity: 0.85;
+  opacity: 0.95;
 }
 
 /* ── BOTTOM NAV ── */
@@ -347,13 +359,11 @@ html, body {
   78%  { opacity:0.5; }
   100% { opacity:0; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .card { transition: none !important; }
-}
 </style>
 </head>
 <body>
+
+<div class="golden-hour-overlay"></div>
 
 <div class="surface"></div>
 <div class="ambient" id="ambient" data-group="1"></div>
@@ -368,7 +378,7 @@ html, body {
 
 <div class="stage" id="stage"></div>
 
-<p class="hint">tap · swipe up to go forward</p>
+<p class="hint">tap to go forward</p>
 
 <nav class="nav">
   <button class="nav-btn" id="btnBack" onclick="go(-1)" disabled>← back</button>
@@ -377,39 +387,54 @@ html, body {
 
 <script>
 const CARDS = [
-  { num:"01", title:"daily laughter",        body:"How she's made me gigglier than ever. I've never laughed so often on a daily basis.", accent:"#C07070", bg:"#FDF8F0", group:"1" },
-  { num:"02", title:"the burrito",           body:"I love when she wraps herself up like a burrito when she sleeps and, consequently, gets the best sleep.", accent:"#C07070", bg:"#FDF6EE", group:"1" },
-  { num:"03", title:"discipline",             body:"How she manages her time and distributes her workload to her benefit without ever compromising her efforts.", accent:"#B86868", bg:"#FCF5ED", group:"1" },
-  { num:"04", title:"the ragebait",          body:"The way she ragebaits me and gets a reaction out of me every time.", accent:"#C07070", bg:"#FDF7F0", group:"1" },
-  { num:"05", title:"helplessly flustered",  body:"The way she gets me flustered just from seeing her.", accent:"#C07878", bg:"#FDF6EF", group:"1" },
-  { num:"06", title:"the shimmy",            body:"How she randomly dances on call. Just a simple little shimmy, and I'm mesmerized.", accent:"#526348", bg:"#F6FAF2", group:"2" },
-  { num:"07", title:"blunt & honest",        body:"Her bluntness. She tells things as they are and never sugarcoats them unnecessarily. I love that I never have to guess what she's thinking. Her honesty is one of the many reasons I trust her so deeply.", accent:"#4E6145", bg:"#F5F9F1", group:"2", long:true },
-  { num:"08", title:"her advice",            body:"Her advice. She always seems to know what to say — thoughtful, practical, and given with so much care that I find myself carrying her words with me long after our conversations end.", accent:"#526348", bg:"#F6FAF2", group:"2", long:true },
-  { num:"09", title:"that swoop",            body:"The swoop between her forehead and nose. I just find it so lovely — the very spot I long to gently kiss.", accent:"#4E6145", bg:"#F5F9F1", group:"2" },
-  { num:"10", title:"the intimacy",          body:"The way she leaves me needy, yet satisfied.", accent:"#526348", bg:"#F6FAF2", group:"2" },
-  { num:"11", title:"included",              body:"The way she makes me feel included in her work and hobbies by letting me be part of the process and allowing me to think and choose alongside her.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
-  { num:"12", title:"she's pretty",          body:"The way she smiles right after I tell her she's pretty. She denies it, but I'll keep reminding her how beautiful she is.", accent:"#7262A0", bg:"#F5F3FA", group:"3" },
-  { num:"13", title:"my personal bully",     body:"How much of a bully she is whenever I mess up my words. I love it when she laughs at my expense.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
-  { num:"14", title:"her worldview",          body:"Her outlook on life. She's logical in a way that goes beyond common sense. I've never met someone whose perspective I agree with so consistently.", accent:"#7262A0", bg:"#F5F3FA", group:"3" },
-  { num:"15", title:"our someday",            body:"Van life, a tiny home, a little cottage in the woods, or a cozy apartment — no matter the place, it's the thought of the two of us and our cats that makes me smile.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
-  { num:"16", title:"she calls me cute",     body:"How she can find every little reason to call me cute. I still get flustered every time she does.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
-  { num:"17", title:"still thrilling",       body:"The way our love has remained just as thrilling as it was in the beginning, if not more.", accent:"#B07C28", bg:"#FAF5E6", group:"4" },
-  { num:"18", title:"a benevolent creator",  body:"From cute mushrooms, kois, and lady-pugs, to a pendant that holds pieces of Shana and a mossy Totoro — all made by her own loving hands.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
-  { num:"19", title:"hers entirely",          body:"I love and adore her body. I pine for the day my hands can finally hold her, to feel her warmth beneath my touch. She's so beautiful it makes me cry.", accent:"#B07C28", bg:"#FAF5E6", group:"4" },
-  { num:"20", title:"non-zero probability",  body:"Somehow, in this crazy world of non-zero probability, we found each other and chose to love one another — not just as lovers, but as best friends who grew deeply in love despite coming from opposite sides of the world.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
-  { num:"✦",  title:"Happy Post-One-Year Monthsary, Fairy.",
-    body:"I don't think I'll ever run out of reasons to love you, nor will I ever stop finding new things to admire about you. Every month gives me something new to cherish — something big, something small, or something wonderfully and uniquely you.",
-    sign:"— always yours ♡",
-    accent:"#C07070", bg:"#FDF6EF", group:"end", closing:true }
+  { title:"20 way more reasons I love about Clara", body:"A simple space holding twenty more genuine reminders of exactly why you mean everything to me. Take your time scrolling through, my love.", accent:"#C07070", bg:"#FDF8F0", group:"1" },
+  { title:"The joy you give me",               body:"How she's made me gigglier than ever. I've never laughed so often on a daily basis.", accent:"#C07070", bg:"#FDF8F0", group:"1" },
+  { title:"Your Sleep Habits",             body:"I love when she wraps herself up like a burrito when she sleeps and, consequently, gets the best sleep.", accent:"#C07070", bg:"#FDF6EE", group:"1" },
+  { title:"Personal Discipline",     body:"How she manages her time and distributes her workload to her benefit without ever compromising what she wants to do later in the day", accent:"#B86868", bg:"#FCF5ED", group:"1" },
+  { title:"Playful Tease",         body:"The way she ragebaits me and gets a reaction out of me every time.", accent:"#C07070", bg:"#FDF7F0", group:"1" },
+  { title:"Romantic Attraction",     body:"The way she gets me flustered just from seeing her.", accent:"#C07878", bg:"#FDF6EF", group:"1" },
+  { title:"Dance Calls",             body:"How she randomly dances on call. Just a simple little shimmy, and I'm mesmerized.", accent:"#526348", bg:"#F6FAF2", group:"2" },
+  { title:"Loving Bluntness",       body:"Her bluntness. She tells things as they are and never sugarcoats them unnecessarily. I love that I never have to guess what she's thinking. Her honesty is one of the many reasons I trust her so deeply.", accent:"#4E6145", bg:"#F5F9F1", group:"2", long:true },
+  { title:"Thoughtful Guidance",     body:"Her advice. She always seems to know what to say, thoughtful, practical, and given with so much care that I find myself carrying her words with me long after our conversations end.", accent:"#526348", bg:"#F6FAF2", group:"2", long:true },
+  { title:"Bridge Between Eyes and Lips",     body:"The swoop down between her forehead and nose. I just find it so lovely, the very spot I long to gently kiss.", accent:"#4E6145", bg:"#F5F9F1", group:"2" },
+  { title:"Physical Connection",     body:"The way she leaves me needy, yet satisfied.", accent:"#526348", bg:"#F6FAF2", group:"2" },
+  { title:"Inclusion",        body:"The way she makes me feel included in her work and hobbies by letting me be part of the process and allowing me to think and choose alongside her.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
+  { title:"The Effect of my Affection",    body:"The way she smiles right after I tell her she's pretty. She denies it, but I'll keep reminding her how beautiful she is.", accent:"#7262A0", bg:"#F5F3FA", group:"3" },
+  { title:"My Personal Bully",        body:"How much of a bully she is whenever I mess up my words. I love it when she laughs at my expense.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
+  { title:"Her Perspective",        body:"Her outlook on life. She's logical in a way that goes beyond common sense. I've never met someone whose perspective I agree with so consistently.", accent:"#7262A0", bg:"#F5F3FA", group:"3" },
+  { title:"Future Goals",            body:"Van life, a tiny home, a little cottage in the woods, or a cozy apartment, no matter the place, it's the thought of the two of us and our cats that makes me smile.", accent:"#7A6B9E", bg:"#F6F4FB", group:"3" },
+  { title:"Words of Endearment",     body:"How she can find every little reason to call me cute. I still get flustered every time she does.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
+  { title:"Love Growth",     body:"The way our love has remained just as thrilling as it was in the beginning, if not more.", accent:"#B07C28", bg:"#FAF5E6", group:"4" },
+  { title:"Benevolent Creator",        body:"From cute mushrooms, kois, and lady-pugs, to a pendant that holds pieces of Shana and a mossy Totoro, all made by her own loving hands.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
+  { title:"Deep Adoration",          body:"I love and adore her body. I pine for the day my hands can finally hold her, to feel her warmth beneath my touch. She's so beautiful it makes me cry.", accent:"#B07C28", bg:"#FAF5E6", group:"4" },
+  { title:"Our Probability",         body:"Somehow, in this crazy world of non-zero probability, we found each other and chose to love one another, not just as lovers, but as best friends who grew deeply in love despite coming from opposite sides of the world.", accent:"#B8862E", bg:"#FBF6E8", group:"4" },
+  { title:"Happy Post-One-Year Monthsary, My Fairy.",
+    body:"I don't think I'll ever run out of reasons to love you, nor will I ever stop finding new things to admire about you. Every month with you gives me something new to cherish, whether it's something big, something small, or something wonderfully and uniquely you. I will always choose to love you endlessly.",
+    accent:"#C07070", bg:"#FDF6EF", group:"end", expandable:true },
+  { title:"With All My Heart",
+    body:"Thank you for being my constant partner, my closest confidante, and the most incredible part of my daily life. Here is to every month and year that follows.",
+    sign:"~ always yours forever ♡",
+    accent:"#C07070", bg:"#FDF6EF", group:"end" }
 ];
 
+// Generates enough manual tilt variations to cover all frames smoothly
 const TILTS = [
-  -2.2, 1.8, -3.1, 2.5, -1.6,
-   3.0,-2.7,  1.4,-3.3,  2.1,
-  -1.9, 2.8, -2.4,  1.7,-3.0,
-   2.3,-1.5,  3.2,-2.6,  1.9,
-  -1.2
+  0.5, -2.2, 1.8, -3.1, 2.5, -1.6,
+   3.0, -2.7, 1.4, -3.3, 2.1,
+  -1.9,  2.8, -2.4, 1.7, -3.0,
+   2.3, -1.5, 3.2, -2.6, 1.9,
+  -1.2,  0.8
 ];
+
+const SCATTERS = CARDS.map(() => {
+  const angle = Math.random() * 2 * Math.PI;
+  const distance = 80 + Math.random() * 40;
+  return {
+    x: (Math.cos(angle) * distance).toFixed(1) + 'vw',
+    y: (Math.sin(angle) * distance).toFixed(1) + 'vh',
+    rot: Math.floor(Math.random() * 120) - 60
+  };
+});
 
 const PEEK_OFFSETS = [
   { y: 8,  rot:  0.6, scale: 0.966 },
@@ -428,7 +453,7 @@ const btnNext = document.getElementById('btnNext');
 
 const cardEls = CARDS.map((data, i) => {
   const el = document.createElement('article');
-  el.className = 'card' + (data.closing ? ' closing' : '');
+  el.className = 'card' + (data.expandable ? ' expandable' : '');
   el.style.setProperty('--accent', data.accent);
   el.style.setProperty('--card-bg', data.bg);
   el.dataset.index = i;
@@ -442,7 +467,6 @@ const cardEls = CARDS.map((data, i) => {
   inner.className = 'card-inner';
 
   inner.innerHTML = `
-    <span class="card-num">${data.num} ${data.closing ? '' : '/ 20'}</span>
     <h2 class="card-title">${data.title}</h2>
     <div class="card-rule"></div>
     <p class="card-text${data.long ? ' long' : ''}">${data.body}</p>
@@ -481,7 +505,8 @@ function applyTransform(el, state, tilt) {
     el.style.transform = `rotate(${t + p.rot}deg) translateY(${p.y}px) scale(${p.scale})`;
     el.style.boxShadow = `0 2px 4px rgba(0,0,0,0.05)`;
   } else if (state === 'gone-forward') {
-    el.style.transform = `translate(160%, -10%) rotate(${t + 35}deg) scale(0.92)`;
+    const s = SCATTERS[el.dataset.index];
+    el.style.transform = `translate(${s.x}, ${s.y}) rotate(${t + s.rot}deg) scale(0.92)`;
     el.style.boxShadow = 'none';
   } else {
     el.style.transform = `rotate(${t + 2}deg) translateY(28px) scale(0.87)`;
@@ -512,7 +537,7 @@ function render(instant) {
 
   btnBack.disabled = current === 0;
   btnNext.disabled = current === TOTAL - 1;
-  btnNext.textContent = current >= TOTAL - 2 ? (current === TOTAL - 1 ? '—' : 'finish →') : 'next →';
+  btnNext.textContent = current >= TOTAL - 2 ? (current === TOTAL - 1 ? 'finish' : 'next →') : 'next →';
 }
 
 function go(dir) {
@@ -525,7 +550,6 @@ function go(dir) {
   setTimeout(() => { isAnimating = false; }, 850);
 }
 
-// Touch / swipe
 let tx = 0, ty = 0;
 document.addEventListener('touchstart', e => {
   tx = e.touches[0].clientX;
@@ -537,7 +561,6 @@ document.addEventListener('touchend', e => {
   if (Math.abs(dy) > 38 && Math.abs(dy) > dx) go(dy > 0 ? 1 : -1);
 }, { passive: true });
 
-// Keyboard
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
